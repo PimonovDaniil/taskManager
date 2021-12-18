@@ -20,7 +20,7 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import TaskCompletingComponent from './TaskCompletingComponent';
-import TaskInformationComponent from "./TaskInformationComponent";
+import TaskInformationComponent from "./TaskInformationComponents/TaskInformationComponent";
 
 const Task: () => Node = ({el}) => {
   return (
