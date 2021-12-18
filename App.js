@@ -26,7 +26,7 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import Task from './components/Task';
+import Task from './components/Task/Task';
 
 const App: () => Node = () => {
   const [listOfTasks, setListOfTasks] = useState([
