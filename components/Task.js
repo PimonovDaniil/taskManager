@@ -20,18 +20,31 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 const Task: () => Node = ({el}) => {
+
   return (
     <SafeAreaView>
-      <Text style={styles.taskStyle}>{el.nameTask}</Text>
+      <View style={styles.taskStyle}>
+        <View style={[{flex: 1}, {backgroundColor: 'red'}, {padding: 10}]}>
+          <Text>Готово!</Text>
+        </View>
+        <View style={[{flex: 5}, {backgroundColor: 'green'},{padding:5}]}>
+          <Text>{el.nameTask}</Text>
+          <Text style={[{marginTop:10}]}>{el.descriptionTask}</Text>
+        </View>
+      </View>
+      {/*<Text>{el.nameTask}</Text>*/}
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   taskStyle: {
-    padding: 20,
-    backgroundColor: "red",
-    textAlign: "center",
+    flexDirection: 'row',
+    flex: 1,
+    borderWidth: 3,
+    borderRadius: 2,
+    border: '1px dashed black',
+    backgroundColor: '#8652f7',
     marginTop: 20,
     marginLeft: 30,
     marginRight: 30,
