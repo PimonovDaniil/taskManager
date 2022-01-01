@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   FilterStyle: {
-    marginRight: 5,
+    marginRight: 10,
     padding: 2,
     borderWidth: 3,
     borderStyle: 'dashed',

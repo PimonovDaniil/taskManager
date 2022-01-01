@@ -19,7 +19,7 @@ const App: () => Node = () => {
       descriptionTask: 'Надо короче пойти в магаз и купить воды',
       deadline: '12.29.2021',
       filter: 'ordinary',
-      index: 1,
+      key: '1',
     },
     {
       nameTask: 'Постирай вещи',
@@ -30,14 +30,20 @@ const App: () => Node = () => {
       deadline: '11.12.2022',
       finishDate: '10.12.2022',
       filter: 'ordinary',
-      index: 2,
+      key: '2',
     },
   ]);
+
+  const deleteTask = key => {
+    setListOfTasks(list => {
+      return list.filter(listOfTasks => listOfTasks.key !== key);
+    });
+  };
   return (
     <SafeAreaView>
       <FlatList
         data={listOfTasks}
-        renderItem={({item}) => <Task el={item} />}
+        renderItem={({item}) => <Task el={item} deleteTask={deleteTask} />}
       />
     </SafeAreaView>
   );

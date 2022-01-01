@@ -1,14 +1,28 @@
 import React, {useState} from 'react';
 import type {Node} from 'react';
-import {Dimensions, SafeAreaView, StyleSheet, View} from 'react-native';
+import {
+  Alert,
+  SafeAreaView,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 
 import TaskCompletingComponent from './TaskComponents/TaskCompletingComponent';
 import TaskInformationComponent from './TaskComponents/TaskInformationComponent';
 
-const Task: () => Node = ({el}) => {
+const Task: () => Node = ({el, deleteTask}) => {
+  const buttonDelitePress = () =>
+    Alert.alert('уведомление', 'рил удалить задачу?', [
+      {text: 'Удалить', onPress: () => deleteTask(el.key)},
+      {text: 'Отмена'},
+    ]);
   return (
     <SafeAreaView>
-      <View style={styles.roundStyle} underlayColor="#ccc" />
+      <TouchableWithoutFeedback onPress={() => buttonDelitePress()}>
+        <View style={[styles.roundStyle, {top: 40}]} />
+      </TouchableWithoutFeedback>
+      <View style={[styles.roundStyle, {top: 75}]} />
       <View style={styles.taskStyle}>
         <TaskCompletingComponent />
         <TaskInformationComponent el={el} />
@@ -33,7 +47,6 @@ const styles = StyleSheet.create({
     padding: 0,
     position: 'relative',
     marginTop: -30,
-    top: 40,
     borderRadius: 50,
     width: 30,
     height: 30,
