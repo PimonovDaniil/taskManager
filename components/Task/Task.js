@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import type {Node} from 'react';
 import {
   Alert,
+  Image,
   SafeAreaView,
   StyleSheet,
   TouchableWithoutFeedback,
@@ -13,14 +14,17 @@ import TaskInformationComponent from './TaskComponents/TaskInformationComponent'
 
 const Task: () => Node = ({el, deleteTask}) => {
   const buttonDelitePress = () =>
-    Alert.alert('уведомление', 'рил удалить задачу?', [
+    Alert.alert('Предупреждение', 'Вы уверены что хотите удалить задачу?', [
       {text: 'Удалить', onPress: () => deleteTask(el.key)},
       {text: 'Отмена'},
     ]);
   return (
     <SafeAreaView>
       <TouchableWithoutFeedback onPress={() => buttonDelitePress()}>
-        <View style={[styles.roundStyle, {top: 40}]} />
+        <Image
+          style={[styles.roundStyle, {top: 40}]}
+          source={require('../../icons/window_close_icon.c7Joj.png')}
+        />
       </TouchableWithoutFeedback>
       <View style={[styles.roundStyle, {top: 75}]} />
       <View style={styles.taskStyle}>
