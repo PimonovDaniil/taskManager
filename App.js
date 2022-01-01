@@ -8,11 +8,7 @@
 
 import React, {useState} from 'react';
 import type {Node} from 'react';
-import {
-  FlatList,
-  SafeAreaView,
-  StyleSheet,
-} from 'react-native';
+import {Dimensions, FlatList, SafeAreaView, StyleSheet} from 'react-native';
 
 import Task from './components/Task/Task';
 

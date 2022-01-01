@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import type {Node} from 'react';
-import {SafeAreaView, StyleSheet, View} from 'react-native';
+import {Dimensions, SafeAreaView, StyleSheet, View} from 'react-native';
 
-import TaskCompletingComponent from './TaskCompletingComponent';
-import TaskInformationComponent from './TaskInformationComponents/TaskInformationComponent';
+import TaskCompletingComponent from './TaskComponents/TaskCompletingComponent';
+import TaskInformationComponent from './TaskComponents/TaskInformationComponent';
 
 const Task: () => Node = ({el}) => {
   return (
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
     marginRight: 20,
     zIndex: 2,
-},
+  },
 });
 
 export default Task;

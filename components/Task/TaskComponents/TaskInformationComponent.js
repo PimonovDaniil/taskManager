@@ -19,10 +19,10 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import TaskCompletingComponent from '../TaskCompletingComponent';
-import HeaderTaskInformationComponent from "./HeaderTaskInformationComponent";
-import DescriptionTaskInformationComponent from "./DescriptionTaskInformationComponent";
-import DateTaskInformationComponent from "./DateTaskInformationComponent";
+import TaskCompletingComponent from './TaskCompletingComponent';
+import HeaderTaskInformationComponent from "./TaskInformationComponents/HeaderTaskInformationComponent";
+import DescriptionTaskInformationComponent from "./TaskInformationComponents/DescriptionTaskInformationComponent";
+import DateTaskInformationComponent from "./TaskInformationComponents/DateTaskInformationComponent";
 
 const TaskInformationComponent: () => Node = ({el}) => {
   const [isOpen, setIsOpen] = useState(0);
