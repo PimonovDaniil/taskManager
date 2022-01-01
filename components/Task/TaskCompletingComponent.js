@@ -33,6 +33,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'red',
     padding: 10,
+    borderBottomLeftRadius: 18,
+    borderTopLeftRadius: 18,
   },
 });
 

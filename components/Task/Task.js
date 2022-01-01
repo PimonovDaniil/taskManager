@@ -1,30 +1,14 @@
 import React, {useState} from 'react';
 import type {Node} from 'react';
-import {
-  FlatList,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TouchableWithoutFeedback,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {SafeAreaView, StyleSheet, View} from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
 import TaskCompletingComponent from './TaskCompletingComponent';
-import TaskInformationComponent from "./TaskInformationComponents/TaskInformationComponent";
+import TaskInformationComponent from './TaskInformationComponents/TaskInformationComponent';
 
 const Task: () => Node = ({el}) => {
   return (
     <SafeAreaView>
+      <View style={styles.roundStyle} underlayColor="#ccc" />
       <View style={styles.taskStyle}>
         <TaskCompletingComponent />
         <TaskInformationComponent el={el} />
@@ -38,13 +22,28 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flex: 1,
     borderWidth: 3,
-    borderRadius: 2,
+    borderRadius: 20,
     border: '1px black',
     backgroundColor: '#8652f7',
     marginTop: 20,
     marginLeft: 30,
     marginRight: 30,
   },
+  roundStyle: {
+    padding: 0,
+    position: 'relative',
+    marginTop: -30,
+    top: 40,
+    borderRadius: 50,
+    width: 30,
+    height: 30,
+    backgroundColor: '#f00',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 'auto',
+    marginRight: 20,
+    zIndex: 2,
+},
 });
 
 export default Task;
