@@ -8,7 +8,16 @@
 
 import React, {useState} from 'react';
 import type {Node} from 'react';
-import {Dimensions, FlatList, SafeAreaView, StyleSheet} from 'react-native';
+import {
+  FlatList,
+  Image,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 
 import Task from './components/Task/Task';
 
@@ -32,6 +41,41 @@ const App: () => Node = () => {
       filter: 'ordinary',
       key: '2',
     },
+    {
+      nameTask: 'Купить воды',
+      descriptionTask: 'Надо короче пойти в магаз и купить воды',
+      deadline: '12.29.2021',
+      filter: 'ordinary',
+      key: '3',
+    },
+    {
+      nameTask: 'Купить воды',
+      descriptionTask: 'Надо короче пойти в магаз и купить воды',
+      deadline: '12.29.2021',
+      filter: 'ordinary',
+      key: '4',
+    },
+    {
+      nameTask: 'Купить воды',
+      descriptionTask: 'Надо короче пойти в магаз и купить воды',
+      deadline: '12.29.2021',
+      filter: 'ordinary',
+      key: '5',
+    },
+    {
+      nameTask: 'Купить воды',
+      descriptionTask: 'Надо короче пойти в магаз и купить воды',
+      deadline: '12.29.2021',
+      filter: 'ordinary',
+      key: '6',
+    },
+    {
+      nameTask: 'Купить воды',
+      descriptionTask: 'Надо короче пойти в магаз и купить воды',
+      deadline: '12.29.2021',
+      filter: 'ordinary',
+      key: '7',
+    },
   ]);
 
   const deleteTask = key => {
@@ -40,19 +84,30 @@ const App: () => Node = () => {
     });
   };
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{flex: 1}}>
       <FlatList
+        style={[{flex: 1}]}
         data={listOfTasks}
         renderItem={({item}) => <Task el={item} deleteTask={deleteTask} />}
       />
+      <View style={styles.addTaskStyle}>
+        <TouchableWithoutFeedback onPress={() => alert('типо добавляю задачу')}>
+          <View
+            style={[{flex: 1}, {flexDirection: 'row'}, {alignItems: 'center'}]}>
+            <Image source={require('./icons/add_100px.png')} />
+            <Text style={[{flex: 3}, {fontSize: 22}]}>Добавить задачу</Text>
+          </View>
+        </TouchableWithoutFeedback>
+      </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  addTaskStyle: {
+    flexDirection: 'row',
+    marginLeft: 30,
+    marginRight: 30,
   },
 });
 

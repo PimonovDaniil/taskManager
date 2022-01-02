@@ -21,10 +21,9 @@ const Task: () => Node = ({el, deleteTask}) => {
   return (
     <SafeAreaView>
       <TouchableWithoutFeedback onPress={() => buttonDelitePress()}>
-        <Image
-          style={[styles.roundStyle, {top: 40}]}
-          source={require('../../icons/window_close_icon.c7Joj.png')}
-        />
+        <View style={[styles.roundStyle, {top: 40}]}>
+          <Image source={require('../../icons/window_close_icon.c7Joj.png')} />
+        </View>
       </TouchableWithoutFeedback>
       <View style={[styles.roundStyle, {top: 75}]} />
       <View style={styles.taskStyle}>
@@ -42,7 +41,7 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderRadius: 20,
     border: '1px black',
-    backgroundColor: '#8652f7',
+    backgroundColor: 'black',
     marginTop: 20,
     marginLeft: 30,
     marginRight: 30,
@@ -60,6 +59,8 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
     marginRight: 20,
     zIndex: 2,
+    borderWidth: 2,
+    border: '1px black',
   },
 });
 
