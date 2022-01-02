@@ -8,19 +8,11 @@
 
 import React, {useState} from 'react';
 import type {Node} from 'react';
-import {
-  FlatList,
-  Image,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableHighlight,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
+import { FlatList, Modal, SafeAreaView, StyleSheet } from "react-native";
 
 import Task from './components/Task/Task';
-import AddTaskButton from "./components/AddTaskButton";
+import AddTaskButton from './components/AddTaskButton';
+import Form from './components/Form';
 
 const App: () => Node = () => {
   const [listOfTasks, setListOfTasks] = useState([

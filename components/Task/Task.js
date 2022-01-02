@@ -22,7 +22,7 @@ const Task: () => Node = ({el, deleteTask}) => {
     <SafeAreaView>
       <TouchableWithoutFeedback onPress={() => buttonDelitePress()}>
         <View style={[styles.roundStyle, {top: 40}]}>
-          <Image source={require('../../icons/window_close_icon.c7Joj.png')} />
+          <Image source={require('../../icons/Close_16px.png')} />
         </View>
       </TouchableWithoutFeedback>
       <View style={[styles.roundStyle, {top: 75}]} />
