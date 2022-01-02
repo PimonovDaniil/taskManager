@@ -20,6 +20,7 @@ import {
 } from 'react-native';
 
 import Task from './components/Task/Task';
+import AddTaskButton from "./components/AddTaskButton";
 
 const App: () => Node = () => {
   const [listOfTasks, setListOfTasks] = useState([
@@ -90,25 +91,11 @@ const App: () => Node = () => {
         data={listOfTasks}
         renderItem={({item}) => <Task el={item} deleteTask={deleteTask} />}
       />
-      <View style={styles.addTaskStyle}>
-        <TouchableWithoutFeedback onPress={() => alert('типо добавляю задачу')}>
-          <View
-            style={[{flex: 1}, {flexDirection: 'row'}, {alignItems: 'center'}]}>
-            <Image source={require('./icons/add_100px.png')} />
-            <Text style={[{flex: 3}, {fontSize: 22}]}>Добавить задачу</Text>
-          </View>
-        </TouchableWithoutFeedback>
-      </View>
+      <AddTaskButton />
     </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({
-  addTaskStyle: {
-    flexDirection: 'row',
-    marginLeft: 30,
-    marginRight: 30,
-  },
-});
+const styles = StyleSheet.create({});
 
 export default App;
