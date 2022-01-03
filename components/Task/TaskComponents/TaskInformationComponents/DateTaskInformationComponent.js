@@ -22,18 +22,23 @@ import {
 import TaskCompletingComponent from '../TaskCompletingComponent';
 import HeaderTaskInformationComponent from './HeaderTaskInformationComponent';
 import DescriptionTaskInformationComponent from './DescriptionTaskInformationComponent';
+import moment from 'moment';
 
 const DateTaskInformationComponent: () => Node = ({el}) => {
   return (
     <View>
       {el?.deadline !== undefined && (
         <Text style={[{color: 'white'}, {textAlign: 'right'}]}>
-          Сделать до {el?.deadline}
+          Сделать до{' '}
+          {el?.deadline ? moment(el?.deadline).format('MMMM DD, YYYY') : '-'}
         </Text>
       )}
       {el?.finishDate !== undefined && (
         <Text style={[{color: 'white'}, {textAlign: 'right'}]}>
-          Сделано {el?.finishDate}
+          Сделано{' '}
+          {el?.finishDate
+            ? moment(el?.finishDate).format('MMMM DD, YYYY')
+            : '-'}
         </Text>
       )}
     </View>

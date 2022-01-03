@@ -45,8 +45,8 @@ const styles = StyleSheet.create({
     flex: 5,
     backgroundColor: 'green',
     padding: 5,
-    borderBottomRightRadius: 18,
-    borderTopRightRadius: 18,
+    borderBottomRightRadius: 8,
+    borderTopRightRadius: 8,
   },
 });
 

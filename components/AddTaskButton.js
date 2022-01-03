@@ -12,8 +12,9 @@ import {
 import Form from './Form';
 import {ModalPanel} from '@ui-kitten/components';
 
-const AddTaskButton: () => Node = () => {
+const AddTaskButton: () => Node = ({addTask}) => {
   const [modalWindow, setModalWindow] = useState(false);
+  //TODO отрефакторить
   return (
     <View style={styles.addTaskStyle}>
       <TouchableWithoutFeedback onPress={() => setModalWindow(true)}>
@@ -25,11 +26,7 @@ const AddTaskButton: () => Node = () => {
       </TouchableWithoutFeedback>
       <Modal visible={modalWindow}>
         <ModalPanel>
-          <View
-            style={[
-              {alignContent: 'center'},
-              {alignItems: 'center'},
-            ]}>
+          <View style={[{alignContent: 'center'}, {alignItems: 'center'}]}>
             <TouchableWithoutFeedback
               onPress={() => {
                 setModalWindow(false);
@@ -37,7 +34,7 @@ const AddTaskButton: () => Node = () => {
               <Image source={require('../icons/icons8-удалить-48.png')} />
             </TouchableWithoutFeedback>
           </View>
-          <Form />
+          <Form addTask={addTask} setModalWindow={setModalWindow} />
         </ModalPanel>
       </Modal>
     </View>

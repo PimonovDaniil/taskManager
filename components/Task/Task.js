@@ -18,6 +18,7 @@ const Task: () => Node = ({el, deleteTask}) => {
       {text: 'Удалить', onPress: () => deleteTask(el.key)},
       {text: 'Отмена'},
     ]);
+  //TODO отрефакторить кнопки
   return (
     <SafeAreaView>
       <TouchableWithoutFeedback onPress={() => buttonDelitePress()}>
@@ -38,8 +39,8 @@ const styles = StyleSheet.create({
   taskStyle: {
     flexDirection: 'row',
     flex: 1,
-    borderWidth: 3,
-    borderRadius: 20,
+    borderWidth: 2,
+    borderRadius: 10,
     border: '1px black',
     backgroundColor: 'black',
     marginTop: 20,

@@ -1,93 +1,117 @@
-import React, {useState} from 'react';
-import type {Node} from 'react';
+import React, {useState, Node} from 'react';
 import {Button, StyleSheet, TextInput, View} from 'react-native';
 import {Formik} from 'formik';
-import {IndexPath, Select, SelectItem, Toggle} from '@ui-kitten/components';
-import {Datepicker, Text} from '@ui-kitten/components';
+import {Toggle, Text} from '@ui-kitten/components';
 import SafeAreaView from 'react-native/Libraries/Components/SafeAreaView/SafeAreaView';
 import RNPickerSelect from 'react-native-picker-select';
 import DateTimePickerModal from 'react-native-datetimepicker-modal';
 import moment from 'moment';
 
-const Form: () => Node = () => {
-  const [date, setDate] = React.useState(new Date());
+const Form: () => Node = ({addTask, setModalWindow}) => {
+  const [nameTask, setNameTask] = React.useState('');
+  const [discriptionTask, setDiscriptionTask] = React.useState('');
+  const [deadline, setDeadline] = useState(new Date());
+  const [priority, setPriority] = useState('обычная');
   const [checked, setChecked] = React.useState(false);
 
+  const onAddTaskPress = () => {
+    //TODO отрефакторить
+    addTask(
+      checked
+        ? {
+            nameTask: nameTask,
+            descriptionTask: discriptionTask,
+            deadline: deadline,
+            filter: priority,
+            key: new Date(),
+          }
+        : {
+            nameTask: nameTask,
+            descriptionTask: discriptionTask,
+            filter: priority,
+            key: new Date(),
+          },
+    );
+    setModalWindow(false);
+  };
   const onCheckedChange = isChecked => {
     setChecked(isChecked);
   };
-
-  const [birthDate, setBirthDate] = useState(new Date());
   const [show, showModal] = useState(false);
   const toggle = () => showModal(!show);
   //TODO тут надо рефакторить конечно
   return (
     <View>
-      <Formik
-        initialValues={{
-          nameTask: '',
-          descriptionTask: '',
-          deadline: '',
-          filter: '',
-        }}
-        onSubmit={values => {
-          console.log(values);
-        }}>
-        {props => (
-          <SafeAreaView style={[{padding: 10}]}>
-            <View>
-              <TextInput
-                value={props.values.nameTask}
-                placeholder="Введите название задачи"
-                onChangeText={props.handleChange('nameTask')}
-              />
-              <TextInput
-                value={props.values.descriptionTask}
-                multiline
-                placeholder="Введите описание задачи"
-                onChangeText={props.handleChange('descriptionTask')}
-              />
-              <View style={[{alignItems: 'flex-start'}]}>
-                <Toggle checked={checked} onChange={onCheckedChange}>
-                  Установить крайний срок задачи
-                </Toggle>
+      <SafeAreaView style={[{padding: 30}]}>
+        <View>
+          <TextInput
+            style={styles.input}
+            value={nameTask}
+            placeholder="Введите название задачи"
+            onChangeText={nameTask => setNameTask(nameTask)}
+          />
+          <TextInput
+            style={styles.input}
+            value={discriptionTask}
+            // multiline
+            placeholder="Введите описание задачи"
+            onChangeText={discriptionTask =>
+              setDiscriptionTask(discriptionTask)
+            }
+          />
+          <View style={[{alignItems: 'flex-start'}]}>
+            <Toggle checked={checked} onChange={onCheckedChange}>
+              Установить крайний срок задачи
+            </Toggle>
+          </View>
+          {checked === true && (
+            <DateTimePickerModal
+              style={[{disabled: false}]}
+              value={deadline}
+              onChange={(event, date) => setDeadline(date)}
+              show={show}
+              toggle={toggle}>
+              <View
+                style={[
+                  {flexDirection: 'row'},
+                  {alignItems: 'flex-end'},
+                  {fontSize: 14},
+                ]}>
+                <Text>Крайний срок: </Text>
+                <Text style={({fontWeight: 'bold'}, {fontSize: 18})}>
+                  {deadline ? moment(deadline).format('MMMM DD, YYYY') : '-'}
+                </Text>
               </View>
-              {checked === true && (
-                <DateTimePickerModal
-                  style={[{disabled: false}]}
-                  value={birthDate}
-                  onChange={(event, date) => setBirthDate(date)}
-                  show={show}
-                  toggle={toggle}>
-                  <Text>
-                    Крайний срок:{' '}
-                    {birthDate
-                      ? moment(birthDate).format('MMMM DD, YYYY')
-                      : '-'}
-                  </Text>
-                </DateTimePickerModal>
-              )}
-            </View>
-            <RNPickerSelect
-              placeholder={{}}
-              onValueChange={value => console.log(value)}
-              items={[
-                {label: 'обычные', value: 'обычные'},
-                {label: 'важные', value: 'важные'},
-                {label: 'очень важные', value: 'очень важные'},
-              ]}
-            />
-
-            <View style={[{zIndex: -10}]}>
-              <Button title="Добавить" onPress={props.handleSubmit} />
-            </View>
-          </SafeAreaView>
-        )}
-      </Formik>
+            </DateTimePickerModal>
+          )}
+        </View>
+        <View style={[{marginTop: 20}]}>
+          <Text>Приоритет задачи:</Text>
+          <RNPickerSelect
+            placeholder={{}}
+            onValueChange={priority => setPriority(priority)}
+            items={[
+              {label: 'обычная', value: 'обычная'},
+              {label: 'важная', value: 'важная'},
+              {label: 'очень важная', value: 'очень важная'},
+            ]}
+          />
+        </View>
+        <View>
+          <Button title="Добавить" onPress={() => onAddTaskPress()} />
+        </View>
+      </SafeAreaView>
     </View>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  input: {
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: 'silver',
+    borderRadius: 5,
+  },
+});
 
 export default Form;
