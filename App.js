@@ -20,7 +20,7 @@ export const App = () => {
       nameTask: 'Купить воды',
       descriptionTask: 'Надо короче пойти в магаз и купить воды',
       deadline: new Date(),
-      filter: 'ordinary',
+      filter: 'обычная',
       key: '1',
     },
     {
@@ -31,7 +31,7 @@ export const App = () => {
         ' залить воды в тазик, помешать, постирать и вытащить на вешалку сушиться',
       deadline: new Date(),
       finishDate: new Date(),
-      filter: 'ordinary',
+      filter: 'обычная',
       key: '2',
     },
   ]);

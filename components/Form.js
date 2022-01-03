@@ -1,5 +1,5 @@
 import React, {useState, Node} from 'react';
-import {Button, StyleSheet, TextInput, View} from 'react-native';
+import { Alert, Button, StyleSheet, TextInput, View } from "react-native";
 import {Formik} from 'formik';
 import {Toggle, Text} from '@ui-kitten/components';
 import SafeAreaView from 'react-native/Libraries/Components/SafeAreaView/SafeAreaView';
@@ -16,23 +16,27 @@ const Form: () => Node = ({addTask, setModalWindow}) => {
 
   const onAddTaskPress = () => {
     //TODO отрефакторить
-    addTask(
-      checked
-        ? {
-            nameTask: nameTask,
-            descriptionTask: discriptionTask,
-            deadline: deadline,
-            filter: priority,
-            key: new Date(),
-          }
-        : {
-            nameTask: nameTask,
-            descriptionTask: discriptionTask,
-            filter: priority,
-            key: new Date(),
-          },
-    );
-    setModalWindow(false);
+    if (nameTask.trim() === '') {
+      Alert.alert('Предупреждение', 'Введите название задачи');
+    } else {
+      addTask(
+        checked
+          ? {
+              nameTask: nameTask,
+              descriptionTask: discriptionTask,
+              deadline: deadline,
+              filter: priority,
+              key: new Date(),
+            }
+          : {
+              nameTask: nameTask,
+              descriptionTask: discriptionTask,
+              filter: priority,
+              key: new Date(),
+            },
+      );
+      setModalWindow(false);
+    }
   };
   const onCheckedChange = isChecked => {
     setChecked(isChecked);
