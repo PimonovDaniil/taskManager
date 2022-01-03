@@ -2,8 +2,10 @@ import React, {useState} from 'react';
 import type {Node} from 'react';
 import {Button, StyleSheet, TextInput, View} from 'react-native';
 import {Formik} from 'formik';
+import { IndexPath, Select, SelectItem } from "@ui-kitten/components";
 
 const Form: () => Node = () => {
+  const [selectedIndex, setSelectedIndex] = React.useState(new IndexPath(0));
   return (
     <View>
       <Formik
@@ -18,6 +20,13 @@ const Form: () => Node = () => {
         }}>
         {props => (
           <View>
+            <Select
+              selectedIndex={selectedIndex}
+              onSelect={index => setSelectedIndex(index)}>
+              <SelectItem title="Option 1" />
+              <SelectItem title="Option 2" />
+              <SelectItem title="Option 3" />
+            </Select>
             <TextInput
               value={props.values.nameTask}
               placeholder="Введите название задачи"
