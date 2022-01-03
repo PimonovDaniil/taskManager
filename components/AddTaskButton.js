@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import type {Node} from 'react';
 import {
+  Button,
   Image,
   Modal,
   StyleSheet,
@@ -9,13 +10,12 @@ import {
   View,
 } from 'react-native';
 import Form from './Form';
-import {ModalPanel} from "@ui-kitten/components";
+import {ModalPanel} from '@ui-kitten/components';
 
 const AddTaskButton: () => Node = () => {
   const [modalWindow, setModalWindow] = useState(false);
   return (
     <View style={styles.addTaskStyle}>
-
       <TouchableWithoutFeedback onPress={() => setModalWindow(true)}>
         <View
           style={[{flex: 1}, {flexDirection: 'row'}, {alignItems: 'center'}]}>
@@ -25,6 +25,18 @@ const AddTaskButton: () => Node = () => {
       </TouchableWithoutFeedback>
       <Modal visible={modalWindow}>
         <ModalPanel>
+          <View
+            style={[
+              {alignContent: 'center'},
+              {alignItems: 'center'},
+            ]}>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                setModalWindow(false);
+              }}>
+              <Image source={require('../icons/icons8-удалить-48.png')} />
+            </TouchableWithoutFeedback>
+          </View>
           <Form />
         </ModalPanel>
       </Modal>

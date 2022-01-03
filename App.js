@@ -8,7 +8,8 @@
 
 import React, {useState} from 'react';
 import type {Node} from 'react';
-import {FlatList, SafeAreaView, StyleSheet} from 'react-native';
+import {FlatList, SafeAreaView, StyleSheet, Text} from 'react-native';
+import {Picker} from 'react-native';
 import Task from './components/Task/Task';
 import AddTaskButton from './components/AddTaskButton';
 
@@ -100,6 +101,7 @@ import {
   Select,
   SelectItem,
 } from '@ui-kitten/components';
+import RNPickerSelect from 'react-native-picker-select';
 
 export const App = () => {
   const [listOfTasks, setListOfTasks] = useState([
@@ -166,14 +168,17 @@ export const App = () => {
   const [selectedIndex, setSelectedIndex] = React.useState(new IndexPath(0));
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
-      <Select
-        selectedIndex={selectedIndex}
-        onSelect={index => setSelectedIndex(index)}>
-        <SelectItem title="Option 1" />
-        <SelectItem title="Option 2" />
-        <SelectItem title="Option 3" />
-      </Select>
       <SafeAreaView style={{flex: 1}}>
+        <RNPickerSelect
+          placeholder={{}}
+          onValueChange={value => console.log(value)}
+          items={[
+            {label: 'все', value: 'все'},
+            {label: 'обычные', value: 'обычные'},
+            {label: 'важные', value: 'важные'},
+            {label: 'очень важные', value: 'очень важные'},
+          ]}
+        />
         <FlatList
           style={[{flex: 1}]}
           data={listOfTasks}
