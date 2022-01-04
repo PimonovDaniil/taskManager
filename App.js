@@ -7,7 +7,7 @@
  */
 
 import React, {useEffect, useState} from 'react';
-import {AsyncStorage, FlatList, SafeAreaView} from 'react-native';
+import {AsyncStorage, FlatList, Image, SafeAreaView, View} from 'react-native';
 // import {AsyncStorage} from '@react-native-async-storage/async-storage';
 import Task from './components/Task/Task';
 import AddTaskButton from './components/AddTaskButton';
@@ -18,24 +18,24 @@ import RNPickerSelect from 'react-native-picker-select';
 export const App = () => {
   console.disableYellowBox = true;
   const [listOfTasks, setListOfTasks] = useState([
-    // {
-    //   nameTask: 'Купить воды',
-    //   descriptionTask: 'Надо короче пойти в магаз и купить воды',
-    //   deadline: new Date(),
-    //   filter: 'обычная',
-    //   key: '1',
-    // },
-    // {
-    //   nameTask: 'Постирай вещи',
-    //   descriptionTask:
-    //     'Надо короче пойти, взять тазик, стиральный парашок,' +
-    //     ' бахнуть стирального парашка в тазик, бахунть одежды в тазик, потом' +
-    //     ' залить воды в тазик, помешать, постирать и вытащить на вешалку сушиться',
-    //   deadline: new Date(),
-    //   finishDate: new Date(),
-    //   filter: 'обычная',
-    //   key: '2',
-    // },
+    {
+      nameTask: 'Купить воды',
+      descriptionTask: 'Надо короче пойти в магаз и купить воды',
+      deadline: new Date(),
+      filter: 'обычная',
+      key: '1',
+    },
+    {
+      nameTask: 'Постирай вещи',
+      descriptionTask:
+        'Надо короче пойти, взять тазик, стиральный парашок,' +
+        ' бахнуть стирального парашка в тазик, бахунть одежды в тазик, потом' +
+        ' залить воды в тазик, помешать, постирать и вытащить на вешалку сушиться',
+      deadline: new Date(),
+      finishDate: new Date(),
+      filter: 'обычная',
+      key: '2',
+    },
   ]);
   const storeData = async list => {
     try {
@@ -53,13 +53,13 @@ export const App = () => {
         // We have data!!
         setListOfTasks(JSON.parse(value));
       }
+      await setChecked(false);
     } catch (error) {
       // Error retrieving data
     }
   };
   if (checked === true) {
     retrieveData();
-    setChecked(false);
   }
 
   const deleteTask = async key => {
@@ -89,11 +89,25 @@ export const App = () => {
             {label: 'очень важные', value: 'очень важные'},
           ]}
         />
-        <FlatList
-          style={[{flex: 1}]}
-          data={listOfTasks}
-          renderItem={({item}) => <Task el={item} deleteTask={deleteTask} />}
-        />
+        {checked === false && (
+          <FlatList
+            style={[{flex: 1}]}
+            data={listOfTasks}
+            renderItem={({item}) => <Task el={item} deleteTask={deleteTask} />}
+          />
+        )}
+        {checked === true && (
+          <View
+            style={[
+              {flex: 1},
+              {alignItems: 'center'},
+              {marginVertical: '50%'},
+            ]}>
+            <Image
+              source={require('./icons/load-a_icon-icons.com_50113.png')}
+            />
+          </View>
+        )}
         <AddTaskButton addTask={addTask} />
       </SafeAreaView>
     </ApplicationProvider>
