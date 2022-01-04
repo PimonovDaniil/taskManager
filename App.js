@@ -6,8 +6,9 @@
  * @flow strict-local
  */
 
-import React, {useState} from 'react';
-import {FlatList, SafeAreaView, StyleSheet, Text} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {AsyncStorage, FlatList, SafeAreaView} from 'react-native';
+// import {AsyncStorage} from '@react-native-async-storage/async-storage';
 import Task from './components/Task/Task';
 import AddTaskButton from './components/AddTaskButton';
 import * as eva from '@eva-design/eva';
@@ -15,37 +16,65 @@ import {ApplicationProvider, IndexPath} from '@ui-kitten/components';
 import RNPickerSelect from 'react-native-picker-select';
 
 export const App = () => {
+  console.disableYellowBox = true;
   const [listOfTasks, setListOfTasks] = useState([
-    {
-      nameTask: 'Купить воды',
-      descriptionTask: 'Надо короче пойти в магаз и купить воды',
-      deadline: new Date(),
-      filter: 'обычная',
-      key: '1',
-    },
-    {
-      nameTask: 'Постирай вещи',
-      descriptionTask:
-        'Надо короче пойти, взять тазик, стиральный парашок,' +
-        ' бахнуть стирального парашка в тазик, бахунть одежды в тазик, потом' +
-        ' залить воды в тазик, помешать, постирать и вытащить на вешалку сушиться',
-      deadline: new Date(),
-      finishDate: new Date(),
-      filter: 'обычная',
-      key: '2',
-    },
+    // {
+    //   nameTask: 'Купить воды',
+    //   descriptionTask: 'Надо короче пойти в магаз и купить воды',
+    //   deadline: new Date(),
+    //   filter: 'обычная',
+    //   key: '1',
+    // },
+    // {
+    //   nameTask: 'Постирай вещи',
+    //   descriptionTask:
+    //     'Надо короче пойти, взять тазик, стиральный парашок,' +
+    //     ' бахнуть стирального парашка в тазик, бахунть одежды в тазик, потом' +
+    //     ' залить воды в тазик, помешать, постирать и вытащить на вешалку сушиться',
+    //   deadline: new Date(),
+    //   finishDate: new Date(),
+    //   filter: 'обычная',
+    //   key: '2',
+    // },
   ]);
+  const storeData = async list => {
+    try {
+      await AsyncStorage.setItem('@MySuperStore:key', JSON.stringify(list));
+    } catch (error) {
+      // Error saving data
+    }
+  };
+  const [checked, setChecked] = React.useState(true);
+  const retrieveData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@MySuperStore:key');
 
-  const deleteTask = key => {
+      if (value !== null) {
+        // We have data!!
+        setListOfTasks(JSON.parse(value));
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+  };
+  if (checked === true) {
+    retrieveData();
+    setChecked(false);
+  }
+
+  const deleteTask = async key => {
+    let newTasks = listOfTasks.filter(listOfTasks => listOfTasks.key !== key);
     setListOfTasks(list => {
       return list.filter(listOfTasks => listOfTasks.key !== key);
     });
+    await storeData(newTasks);
   };
 
-  const addTask = el => {
+  const addTask = async el => {
     setListOfTasks(list => {
       return [el, ...list];
     });
+    await storeData([el, ...listOfTasks]);
   };
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
