@@ -25,7 +25,10 @@ const TaskCompletingComponent: () => Node = ({el, changeReady}) => {
   return (
     <View style={styles.TaskIsCompletingStyle}>
       {el.isReady === false && (
-        <TouchableWithoutFeedback onPress={() => {changeReady(el.key)}}>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            changeReady(el.key);
+          }}>
           <Image
             style={styles.imgStyle}
             source={require('../../../icons/ok_80px.png')}
@@ -33,7 +36,10 @@ const TaskCompletingComponent: () => Node = ({el, changeReady}) => {
         </TouchableWithoutFeedback>
       )}
       {el.isReady === true && (
-        <TouchableWithoutFeedback onPress={() => {changeReady(el.key)}}>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            changeReady(el.key);
+          }}>
           <Image
             style={styles.imgStyle}
             source={require('../../../icons/ok2_80px.png')}

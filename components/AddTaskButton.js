@@ -9,8 +9,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import Form from './Form';
-import {ModalPanel} from '@ui-kitten/components';
+import AddModalForm from './AddModalForm';
 
 const AddTaskButton: () => Node = ({addTask}) => {
   const [modalWindow, setModalWindow] = useState(false);
@@ -24,19 +23,11 @@ const AddTaskButton: () => Node = ({addTask}) => {
           <Text style={[{flex: 3}, {fontSize: 22}]}>Добавить задачу</Text>
         </View>
       </TouchableWithoutFeedback>
-      <Modal visible={modalWindow}>
-        <ModalPanel>
-          <View style={[{alignContent: 'center'}, {alignItems: 'center'}]}>
-            <TouchableWithoutFeedback
-              onPress={() => {
-                setModalWindow(false);
-              }}>
-              <Image source={require('../icons/icons8-удалить-48.png')} />
-            </TouchableWithoutFeedback>
-          </View>
-          <Form addTask={addTask} setModalWindow={setModalWindow} />
-        </ModalPanel>
-      </Modal>
+      <AddModalForm
+        addTask={addTask}
+        setModalWindow={setModalWindow}
+        modalWindow={modalWindow}
+      />
     </View>
   );
 };

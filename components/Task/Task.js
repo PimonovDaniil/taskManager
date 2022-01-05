@@ -11,14 +11,16 @@ import {
 
 import TaskCompletingComponent from './TaskComponents/TaskCompletingComponent';
 import TaskInformationComponent from './TaskComponents/TaskInformationComponent';
+import AddModalForm from '../AddModalForm';
 
-const Task: () => Node = ({el, deleteTask, changeReady}) => {
+const Task: () => Node = ({el, deleteTask, changeReady, redactTask}) => {
   const buttonDelitePress = () =>
     Alert.alert('Предупреждение', 'Вы уверены что хотите удалить задачу?', [
       {text: 'Удалить', onPress: () => deleteTask(el.key)},
       {text: 'Отмена'},
     ]);
   //TODO отрефакторить кнопки
+  const [modalWindow, setModalWindow] = useState(false);
   return (
     <SafeAreaView>
       <TouchableWithoutFeedback onPress={() => buttonDelitePress()}>
@@ -26,7 +28,11 @@ const Task: () => Node = ({el, deleteTask, changeReady}) => {
           <Image source={require('../../icons/Close_16px.png')} />
         </View>
       </TouchableWithoutFeedback>
-      <View style={[styles.roundStyle, {top: 75}]} />
+      <TouchableWithoutFeedback onPress={() => setModalWindow(true)}>
+        <View style={[styles.roundStyle, {top: 75}]}>
+          <Image source={require('../../icons/edit_16px.png')} />
+        </View>
+      </TouchableWithoutFeedback>
       <View
         style={[
           styles.taskStyle,
@@ -43,6 +49,12 @@ const Task: () => Node = ({el, deleteTask, changeReady}) => {
         <TaskCompletingComponent el={el} changeReady={changeReady} />
         <TaskInformationComponent el={el} />
       </View>
+      <AddModalForm
+        addTask={redactTask}
+        setModalWindow={setModalWindow}
+        modalWindow={modalWindow}
+        el={el}
+      />
     </SafeAreaView>
   );
 };

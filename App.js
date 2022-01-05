@@ -85,7 +85,22 @@ export const App = () => {
     });
     await storeData([el, ...listOfTasks]);
   };
-
+  const redactTask = async el => {
+    for (let i = 0; i < listOfTasks.length; i++) {
+      if (listOfTasks[i].key === el.key) {
+        listOfTasks[i].nameTask = el.nameTask;
+        listOfTasks[i].descriptionTask = el.descriptionTask;
+        listOfTasks[i].filter = el.filter;
+        if (el?.deadline !== undefined) {
+          listOfTasks[i].deadline = el.deadline;
+        } else {
+          delete listOfTasks[i].deadline;
+        }
+        break;
+      }
+    }
+    //alert('sdfsdf');
+  };
   const changeReady = key => {
     let i = 0;
     for (; i < listOfTasks.length; i++) {
@@ -143,6 +158,7 @@ export const App = () => {
                 el={item}
                 deleteTask={deleteTask}
                 changeReady={changeReady}
+                redactTask={redactTask}
               />
             )}
           />
