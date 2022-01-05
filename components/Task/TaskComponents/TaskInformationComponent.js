@@ -43,7 +43,7 @@ const TaskInformationComponent: () => Node = ({el}) => {
 const styles = StyleSheet.create({
   TaskInformationStyle: {
     flex: 5,
-    backgroundColor: 'green',
+    backgroundColor: '#6A94D4',
     padding: 5,
     borderBottomRightRadius: 8,
     borderTopRightRadius: 8,

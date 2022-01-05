@@ -7,7 +7,14 @@
  */
 
 import React, {useEffect, useState} from 'react';
-import {AsyncStorage, FlatList, Image, SafeAreaView, View} from 'react-native';
+import {
+  Alert,
+  AsyncStorage,
+  FlatList,
+  Image,
+  SafeAreaView,
+  View,
+} from 'react-native';
 // import {AsyncStorage} from '@react-native-async-storage/async-storage';
 import Task from './components/Task/Task';
 import AddTaskButton from './components/AddTaskButton';
@@ -23,6 +30,7 @@ export const App = () => {
       descriptionTask: 'Надо короче пойти в магаз и купить воды',
       deadline: new Date(),
       filter: 'обычная',
+      isReady: false,
       key: '1',
     },
     {
@@ -34,6 +42,7 @@ export const App = () => {
       deadline: new Date(),
       finishDate: new Date(),
       filter: 'обычная',
+      isReady: false,
       key: '2',
     },
   ]);
@@ -59,7 +68,7 @@ export const App = () => {
     }
   };
   if (checked === true) {
-    retrieveData();
+    retrieveData(); // это конечно костыль это надо убрать
   }
 
   const deleteTask = async key => {
@@ -75,6 +84,42 @@ export const App = () => {
       return [el, ...list];
     });
     await storeData([el, ...listOfTasks]);
+  };
+
+  const changeReady = key => {
+    let i = 0;
+    for (; i < listOfTasks.length; i++) {
+      if (listOfTasks[i].key === key) {
+        break;
+      }
+    }
+    const clonedCard = {...listOfTasks[i]};
+    const changeLigic = () => {
+      clonedCard.isReady = !clonedCard.isReady;
+      if (clonedCard.isReady === true) {
+        clonedCard.finishDate = new Date();
+      } else {
+        clonedCard.finishDate = undefined;
+      }
+      const clonedState = [...listOfTasks];
+      clonedState[i] = clonedCard;
+
+      setListOfTasks(clonedState);
+    };
+    if (clonedCard.isReady === true) {
+      Alert.alert(
+        'Предупреждение',
+        'Вы уверены что хотите вернуть задаче статус "нерешённой"?',
+        [
+          {text: 'Да', onPress: () => changeLigic()},
+          {
+            text: 'Отмена',
+          },
+        ],
+      );
+    } else {
+      changeLigic();
+    }
   };
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
@@ -93,17 +138,23 @@ export const App = () => {
           <FlatList
             style={[{flex: 1}]}
             data={listOfTasks}
-            renderItem={({item}) => <Task el={item} deleteTask={deleteTask} />}
+            renderItem={({item}) => (
+              <Task
+                el={item}
+                deleteTask={deleteTask}
+                changeReady={changeReady}
+              />
+            )}
           />
         )}
         {checked === true && (
-          <View
-            style={[
-              {flex: 1},
-              {alignItems: 'center'},
-              {marginVertical: '50%'},
-            ]}>
+          <View style={[{flex: 1}, {alignItems: 'center'}]}>
             <Image
+              style={[
+                {position: 'relative'},
+                {top: '50%'},
+                {transform: [{translateY: -64}]},
+              ]}
               source={require('./icons/load-a_icon-icons.com_50113.png')}
             />
           </View>

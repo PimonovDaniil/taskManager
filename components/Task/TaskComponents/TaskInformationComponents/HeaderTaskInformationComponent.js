@@ -43,9 +43,10 @@ const styles = StyleSheet.create({
   FilterStyle: {
     marginRight: 10,
     padding: 2,
-    borderWidth: 3,
+    borderWidth: 2,
     borderStyle: 'dashed',
     borderRadius: 5,
+    borderColor: '#0A64A4',
   },
 });
 

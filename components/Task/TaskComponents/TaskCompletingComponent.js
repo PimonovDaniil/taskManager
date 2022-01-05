@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import type {Node} from 'react';
 import {
   FlatList,
+  Image,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -20,10 +21,25 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-const TaskCompletingComponent: () => Node = () => {
+const TaskCompletingComponent: () => Node = ({el, changeReady}) => {
   return (
     <View style={styles.TaskIsCompletingStyle}>
-      <Text style={[{color: 'white'}]}>Готово!</Text>
+      {el.isReady === false && (
+        <TouchableWithoutFeedback onPress={() => {changeReady(el.key)}}>
+          <Image
+            style={styles.imgStyle}
+            source={require('../../../icons/ok_80px.png')}
+          />
+        </TouchableWithoutFeedback>
+      )}
+      {el.isReady === true && (
+        <TouchableWithoutFeedback onPress={() => {changeReady(el.key)}}>
+          <Image
+            style={styles.imgStyle}
+            source={require('../../../icons/ok2_80px.png')}
+          />
+        </TouchableWithoutFeedback>
+      )}
     </View>
   );
 };
@@ -31,10 +47,17 @@ const TaskCompletingComponent: () => Node = () => {
 const styles = StyleSheet.create({
   TaskIsCompletingStyle: {
     flex: 1,
-    backgroundColor: 'red',
+    backgroundColor: '#6A94D4',
     padding: 10,
     borderBottomLeftRadius: 8,
     borderTopLeftRadius: 8,
+    alignItems: 'center',
+    position: 'relative',
+  },
+  imgStyle: {
+    position: 'relative',
+    top: '50%',
+    transform: [{translateY: -20}],
   },
 });
 

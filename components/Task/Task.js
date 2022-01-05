@@ -12,7 +12,7 @@ import {
 import TaskCompletingComponent from './TaskComponents/TaskCompletingComponent';
 import TaskInformationComponent from './TaskComponents/TaskInformationComponent';
 
-const Task: () => Node = ({el, deleteTask}) => {
+const Task: () => Node = ({el, deleteTask, changeReady}) => {
   const buttonDelitePress = () =>
     Alert.alert('Предупреждение', 'Вы уверены что хотите удалить задачу?', [
       {text: 'Удалить', onPress: () => deleteTask(el.key)},
@@ -27,8 +27,20 @@ const Task: () => Node = ({el, deleteTask}) => {
         </View>
       </TouchableWithoutFeedback>
       <View style={[styles.roundStyle, {top: 75}]} />
-      <View style={styles.taskStyle}>
-        <TaskCompletingComponent />
+      <View
+        style={[
+          styles.taskStyle,
+          {
+            borderColor:
+              el.isReady === true
+                ? '#14D100'
+                : new Date(el.deadline) < new Date() &&
+                  new Date(el.deadline).getDay() - new Date().getDay() !== 0
+                ? 'red'
+                : 'black',
+          },
+        ]}>
+        <TaskCompletingComponent el={el} changeReady={changeReady} />
         <TaskInformationComponent el={el} />
       </View>
     </SafeAreaView>
@@ -39,10 +51,10 @@ const styles = StyleSheet.create({
   taskStyle: {
     flexDirection: 'row',
     flex: 1,
-    borderWidth: 2,
+    borderWidth: 3,
     borderRadius: 10,
-    border: '1px black',
-    backgroundColor: 'black',
+    border: '1px',
+    backgroundColor: '#14D100',
     marginTop: 20,
     marginLeft: 30,
     marginRight: 30,
@@ -54,14 +66,14 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     width: 30,
     height: 30,
-    backgroundColor: '#f00',
+    backgroundColor: '#65A5D1',
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 'auto',
     marginRight: 20,
     zIndex: 2,
     borderWidth: 2,
-    border: '1px black',
+    border: '1px',
   },
 });
 
