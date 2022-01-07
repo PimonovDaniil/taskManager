@@ -62,71 +62,67 @@ const Form: () => Node = ({addTask, setModalWindow, el}) => {
   const toggle = () => showModal(!show);
   //TODO тут надо рефакторить конечно
   return (
-    <View>
-      <SafeAreaView style={[{padding: 30}]}>
-        <View>
-          <TextInput
-            style={styles.input}
-            value={nameTask}
-            placeholder="Введите название задачи"
-            onChangeText={nameTask => setNameTask(nameTask)}
-          />
-          <TextInput
-            style={styles.input}
-            value={discriptionTask}
-            // multiline
-            placeholder="Введите описание задачи"
-            onChangeText={discriptionTask =>
-              setDiscriptionTask(discriptionTask)
-            }
-          />
-          <View style={[{alignItems: 'flex-start'}]}>
-            <Toggle checked={checked} onChange={onCheckedChange}>
-              Установить крайний срок задачи
-            </Toggle>
-          </View>
-          {checked === true && (
-            <DateTimePickerModal
-              style={[{disabled: false}]}
-              value={deadline}
-              onChange={(event, date) => setDeadline(date)}
-              show={show}
-              toggle={toggle}>
-              <View
-                style={[
-                  {flexDirection: 'row'},
-                  {alignItems: 'flex-end'},
-                  {fontSize: 14},
-                ]}>
-                <Text>Крайний срок: </Text>
-                <Text style={({fontWeight: 'bold'}, {fontSize: 18})}>
-                  {deadline ? moment(deadline).format('MMMM DD, YYYY') : '-'}
-                </Text>
-              </View>
-            </DateTimePickerModal>
-          )}
+    <SafeAreaView style={[{padding: 30}, {backgroundColor: '#e5f4ff'}]}>
+      <View>
+        <TextInput
+          style={styles.input}
+          value={nameTask}
+          placeholder="Введите название задачи"
+          onChangeText={nameTask => setNameTask(nameTask)}
+        />
+        <TextInput
+          style={styles.input}
+          value={discriptionTask}
+          // multiline
+          placeholder="Введите описание задачи"
+          onChangeText={discriptionTask => setDiscriptionTask(discriptionTask)}
+        />
+        <View style={[{alignItems: 'flex-start'}]}>
+          <Toggle checked={checked} onChange={onCheckedChange}>
+            Установить крайний срок задачи
+          </Toggle>
         </View>
-        <View style={[{marginTop: 20}]}>
-          <Text>Приоритет задачи:</Text>
-          <RNPickerSelect
-            value={priority}
-            placeholder={{}}
-            onValueChange={priority => setPriority(priority)}
-            items={[
-              {label: 'обычная', value: 'обычная'},
-              {label: 'важная', value: 'важная'},
-              {label: 'очень важная', value: 'очень важная'},
-            ]}
-          />
-        </View>
-        <View>
-          <Button
-            title={el === undefined ? 'Добавить' : 'Сохранить'}
-            onPress={() => onAddTaskPress()}
-          />
-        </View>
-      </SafeAreaView>
-    </View>
+        {checked === true && (
+          <DateTimePickerModal
+            style={[{disabled: false}]}
+            value={deadline}
+            onChange={(event, date) => setDeadline(date)}
+            show={show}
+            toggle={toggle}>
+            <View
+              style={[
+                {flexDirection: 'row'},
+                {alignItems: 'flex-end'},
+                {fontSize: 14},
+              ]}>
+              <Text>Крайний срок: </Text>
+              <Text style={({fontWeight: 'bold'}, {fontSize: 18})}>
+                {deadline ? moment(deadline).format('MMMM DD, YYYY') : '-'}
+              </Text>
+            </View>
+          </DateTimePickerModal>
+        )}
+      </View>
+      <View style={[{marginTop: 20}]}>
+        <Text>Приоритет задачи:</Text>
+        <RNPickerSelect
+          value={priority}
+          placeholder={{}}
+          onValueChange={priority => setPriority(priority)}
+          items={[
+            {label: 'обычная', value: 'обычная'},
+            {label: 'важная', value: 'важная'},
+            {label: 'очень важная', value: 'очень важная'},
+          ]}
+        />
+      </View>
+      <View>
+        <Button
+          title={el === undefined ? 'Добавить' : 'Сохранить'}
+          onPress={() => onAddTaskPress()}
+        />
+      </View>
+    </SafeAreaView>
   );
 };
 

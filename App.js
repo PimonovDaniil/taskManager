@@ -13,6 +13,7 @@ import {
   FlatList,
   Image,
   SafeAreaView,
+  Text,
   View,
 } from 'react-native';
 // import {AsyncStorage} from '@react-native-async-storage/async-storage';
@@ -21,6 +22,7 @@ import AddTaskButton from './components/AddTaskButton';
 import * as eva from '@eva-design/eva';
 import {ApplicationProvider, IndexPath} from '@ui-kitten/components';
 import RNPickerSelect from 'react-native-picker-select';
+import {colour} from 'constants';
 
 export const App = () => {
   console.disableYellowBox = true;
@@ -138,17 +140,24 @@ export const App = () => {
   };
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
-      <SafeAreaView style={{flex: 1}}>
-        <RNPickerSelect
-          placeholder={{}}
-          onValueChange={value => console.log(value)}
-          items={[
-            {label: 'все', value: 'все'},
-            {label: 'обычные', value: 'обычные'},
-            {label: 'важные', value: 'важные'},
-            {label: 'очень важные', value: 'очень важные'},
-          ]}
-        />
+      <SafeAreaView style={[{flex: 1}, {backgroundColor: '#e5f4ff'}]}>
+        <View style={[{marginLeft: 30}, {marginRight: 30}]}>
+          <RNPickerSelect
+            placeholder={{}}
+            style={{
+              placeholder: {color: 'black'},
+              inputIOS: {color: 'black'},
+              inputAndroid: {color: 'black'},
+            }}
+            onValueChange={value => console.log(value)}
+            items={[
+              {label: 'все', value: 'все'},
+              {label: 'обычные', value: 'обычные'},
+              {label: 'важные', value: 'важные'},
+              {label: 'очень важные', value: 'очень важные'},
+            ]}
+          />
+        </View>
         {checked === false && (
           <FlatList
             style={[{flex: 1}]}

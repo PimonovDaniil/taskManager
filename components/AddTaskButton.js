@@ -20,7 +20,9 @@ const AddTaskButton: () => Node = ({addTask}) => {
         <View
           style={[{flex: 1}, {flexDirection: 'row'}, {alignItems: 'center'}]}>
           <Image source={require('../icons/add_100px.png')} />
-          <Text style={[{flex: 3}, {fontSize: 22}]}>Добавить задачу</Text>
+          <Text style={[{flex: 3}, {fontSize: 22}, {color: 'black'}]}>
+            Добавить задачу
+          </Text>
         </View>
       </TouchableWithoutFeedback>
       <AddModalForm

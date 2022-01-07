@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import Form from './Form';
 import {ModalPanel} from '@ui-kitten/components';
+import SafeAreaView from 'react-native/Libraries/Components/SafeAreaView/SafeAreaView';
 
 const AddModalForm: () => Node = ({
   addTask,
@@ -17,9 +18,14 @@ const AddModalForm: () => Node = ({
   el,
 }) => {
   return (
-    <Modal visible={modalWindow}>
-      <ModalPanel>
-        <View style={[{alignContent: 'center'}, {alignItems: 'center'}]}>
+    <Modal style={[{backgroundColor: '#e5f4ff'}]} visible={modalWindow}>
+      <ModalPanel style={[{backgroundColor: '#e5f4ff'}]}>
+        <View
+          style={[
+            {alignContent: 'center'},
+            {alignItems: 'center'},
+            {backgroundColor: '#e5f4ff'},
+          ]}>
           <TouchableWithoutFeedback
             onPress={() => {
               setModalWindow(false);
@@ -28,6 +34,7 @@ const AddModalForm: () => Node = ({
           </TouchableWithoutFeedback>
         </View>
         <Form addTask={addTask} setModalWindow={setModalWindow} el={el} />
+        <View style={[{flex: 1}, {backgroundColor: '#e5f4ff'}]} />
       </ModalPanel>
     </Modal>
   );

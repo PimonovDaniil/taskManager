@@ -5,6 +5,8 @@ import {
   Image,
   SafeAreaView,
   StyleSheet,
+  TouchableHighlight,
+  TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
@@ -23,23 +25,25 @@ const Task: () => Node = ({el, deleteTask, changeReady, redactTask}) => {
   const [modalWindow, setModalWindow] = useState(false);
   return (
     <SafeAreaView>
-      <TouchableWithoutFeedback onPress={() => buttonDelitePress()}>
+      <TouchableHighlight
+        style={[{zIndex: 1}]}
+        onPress={() => buttonDelitePress()}>
         <View style={[styles.roundStyle, {top: 40}]}>
           <Image source={require('../../icons/Close_16px.png')} />
         </View>
-      </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback onPress={() => setModalWindow(true)}>
+      </TouchableHighlight>
+      <TouchableHighlight style={[{zIndex: 1}]} onPress={() => setModalWindow(true)}>
         <View style={[styles.roundStyle, {top: 75}]}>
           <Image source={require('../../icons/edit_16px.png')} />
         </View>
-      </TouchableWithoutFeedback>
+      </TouchableHighlight>
       <View
         style={[
           styles.taskStyle,
           {
             borderColor:
               el.isReady === true
-                ? '#14D100'
+                ? '#A3F06C'
                 : new Date(el.deadline) < new Date() &&
                   new Date(el.deadline).getDay() - new Date().getDay() !== 0
                 ? 'red'
@@ -66,7 +70,7 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderRadius: 10,
     border: '1px',
-    backgroundColor: '#14D100',
+    backgroundColor: '#A3F06C',
     marginTop: 20,
     marginLeft: 30,
     marginRight: 30,
