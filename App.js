@@ -13,7 +13,6 @@ import {
   FlatList,
   Image,
   SafeAreaView,
-  Text,
   View,
 } from 'react-native';
 // import {AsyncStorage} from '@react-native-async-storage/async-storage';
@@ -62,6 +61,16 @@ export const App = () => {
   const deleteNotofications = id => {
     PushNotification.cancelLocalNotifications({
       id: Math.trunc(new Date(id).getTime() / 1000),
+    });
+  };
+  const handleNotofications = (nameTask, id, deadline) => {
+    PushNotification.localNotificationSchedule({
+      channelId: 'myChannel',
+      title: 'Task manager',
+      message: 'Скоро крайний срок для задачи "' + nameTask + '"',
+      date: new Date(deadline),
+      id: String(Math.trunc(new Date(id).getTime() / 1000)),
+      allowWhileIdle: true,
     });
   };
   const deleteTask = async key => {
@@ -114,6 +123,15 @@ export const App = () => {
       const clonedState = [...listOfTasks];
       clonedState[i] = clonedCard;
       setListOfTasks(clonedState);
+      if (clonedCard?.deadline !== undefined) {
+        clonedCard.isReady === true
+          ? deleteNotofications(clonedCard.key)
+          : handleNotofications(
+              clonedCard.nameTask,
+              clonedCard.key,
+              clonedCard.deadline,
+            );
+      }
       changeListOfTasks(currentFilter, clonedState);
     };
     if (clonedCard.isReady === true) {

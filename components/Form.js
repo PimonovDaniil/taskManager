@@ -8,7 +8,7 @@ import moment from 'moment';
 import PushNotification from 'react-native-push-notification';
 
 const Form: () => Node = ({addTask, setModalWindow, el}) => {
-  const handleNotofications = (nameTask, discriptionTask, id, deadline) => {
+  const handleNotofications = (nameTask, id, deadline) => {
     PushNotification.localNotificationSchedule({
       channelId: 'myChannel',
       title: 'Task manager',
@@ -70,7 +70,6 @@ const Form: () => Node = ({addTask, setModalWindow, el}) => {
       if (newTask?.deadline !== undefined) {
         handleNotofications(
           newTask.nameTask,
-          newTask.descriptionTask,
           newTask.key,
           newTask.deadline,
         );
