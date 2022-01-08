@@ -20,34 +20,15 @@ import {
 import Task from './components/Task/Task';
 import AddTaskButton from './components/AddTaskButton';
 import * as eva from '@eva-design/eva';
-import {ApplicationProvider, IndexPath} from '@ui-kitten/components';
+import {ApplicationProvider} from '@ui-kitten/components';
 import RNPickerSelect from 'react-native-picker-select';
-import {colour} from 'constants';
 
 export const App = () => {
   console.disableYellowBox = true;
-  const [listOfTasks, setListOfTasks] = useState([
-    {
-      nameTask: 'Купить воды',
-      descriptionTask: 'Надо короче пойти в магаз и купить воды',
-      deadline: new Date(),
-      filter: 'обычная',
-      isReady: false,
-      key: '1',
-    },
-    {
-      nameTask: 'Постирай вещи',
-      descriptionTask:
-        'Надо короче пойти, взять тазик, стиральный парашок,' +
-        ' бахнуть стирального парашка в тазик, бахунть одежды в тазик, потом' +
-        ' залить воды в тазик, помешать, постирать и вытащить на вешалку сушиться',
-      deadline: new Date(),
-      finishDate: new Date(),
-      filter: 'обычная',
-      isReady: false,
-      key: '2',
-    },
-  ]);
+  const [listOfTasks, setListOfTasks] = useState([]);
+  const [listOfFilterTasks, setListOfFilterTasks] = useState([]);
+  const [checked, setChecked] = React.useState(true);
+  const [currentFilter, setCurrentFilter] = React.useState('все');
   const storeData = async list => {
     try {
       await AsyncStorage.setItem('@MySuperStore:key', JSON.stringify(list));
@@ -55,37 +36,33 @@ export const App = () => {
       // Error saving data
     }
   };
-  const [checked, setChecked] = React.useState(true);
   const retrieveData = async () => {
     try {
       const value = await AsyncStorage.getItem('@MySuperStore:key');
-
       if (value !== null) {
         // We have data!!
         setListOfTasks(JSON.parse(value));
+        changeListOfTasks('все', JSON.parse(value));
       }
       await setChecked(false);
     } catch (error) {
       // Error retrieving data
     }
   };
-  if (checked === true) {
-    retrieveData(); // это конечно костыль это надо убрать
-  }
-
   const deleteTask = async key => {
     let newTasks = listOfTasks.filter(listOfTasks => listOfTasks.key !== key);
     setListOfTasks(list => {
       return list.filter(listOfTasks => listOfTasks.key !== key);
     });
     await storeData(newTasks);
+    await changeListOfTasks(currentFilter, newTasks);
   };
-
   const addTask = async el => {
     setListOfTasks(list => {
       return [el, ...list];
     });
     await storeData([el, ...listOfTasks]);
+    await changeListOfTasks(currentFilter, [el, ...listOfTasks]);
   };
   const redactTask = async el => {
     for (let i = 0; i < listOfTasks.length; i++) {
@@ -101,7 +78,7 @@ export const App = () => {
         break;
       }
     }
-    //alert('sdfsdf');
+    changeListOfTasks(currentFilter, listOfTasks);
   };
   const changeReady = key => {
     let i = 0;
@@ -120,8 +97,8 @@ export const App = () => {
       }
       const clonedState = [...listOfTasks];
       clonedState[i] = clonedCard;
-
       setListOfTasks(clonedState);
+      changeListOfTasks(currentFilter, clonedState);
     };
     if (clonedCard.isReady === true) {
       Alert.alert(
@@ -138,6 +115,42 @@ export const App = () => {
       changeLigic();
     }
   };
+  const changeListOfTasks = (filter, taskList) => {
+    setCurrentFilter(filter);
+    const sortDate = (a, b) => {
+      return new Date(a.deadline) - new Date(b.deadline);
+    };
+    const usuall = () => {
+      return taskList.filter(function (el) {
+        return el.filter === 'обычная';
+      });
+    };
+    const important = () => {
+      return taskList.filter(function (el) {
+        return el.filter === 'важная';
+      });
+    };
+    const veryImportant = () => {
+      return taskList.filter(function (el) {
+        return el.filter === 'очень важная';
+      });
+    };
+    if (filter === 'обычные') {
+      setListOfFilterTasks(usuall().sort(sortDate));
+    } else if (filter === 'важные') {
+      setListOfFilterTasks(important().sort(sortDate));
+    } else if (filter === 'очень важные') {
+      setListOfFilterTasks(veryImportant().sort(sortDate));
+    } else if (filter === 'все') {
+      setListOfFilterTasks(
+        veryImportant().concat(important(), usuall()).sort(sortDate),
+      );
+    }
+  };
+  if (checked === true) {
+    retrieveData();
+  }
+
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
       <SafeAreaView style={[{flex: 1}, {backgroundColor: '#e5f4ff'}]}>
@@ -149,7 +162,7 @@ export const App = () => {
               inputIOS: {color: 'black'},
               inputAndroid: {color: 'black'},
             }}
-            onValueChange={value => console.log(value)}
+            onValueChange={value => changeListOfTasks(value, listOfTasks)}
             items={[
               {label: 'все', value: 'все'},
               {label: 'обычные', value: 'обычные'},
@@ -161,7 +174,7 @@ export const App = () => {
         {checked === false && (
           <FlatList
             style={[{flex: 1}]}
-            data={listOfTasks}
+            data={listOfFilterTasks}
             renderItem={({item}) => (
               <Task
                 el={item}
