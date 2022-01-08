@@ -1,13 +1,28 @@
 import React, {useState, Node} from 'react';
 import {Alert, Button, StyleSheet, TextInput, View} from 'react-native';
-import {Formik} from 'formik';
 import {Toggle, Text} from '@ui-kitten/components';
 import SafeAreaView from 'react-native/Libraries/Components/SafeAreaView/SafeAreaView';
 import RNPickerSelect from 'react-native-picker-select';
 import DateTimePickerModal from 'react-native-datetimepicker-modal';
 import moment from 'moment';
+import PushNotification from 'react-native-push-notification';
 
 const Form: () => Node = ({addTask, setModalWindow, el}) => {
+  const handleNotofications = (nameTask, discriptionTask, id, deadline) => {
+    PushNotification.localNotificationSchedule({
+      channelId: 'myChannel',
+      title: 'Task manager',
+      message: 'Скоро крайний срок для задачи "' + nameTask + '"',
+      date: new Date(deadline),
+      id: String(Math.trunc(new Date(id).getTime() / 1000)),
+      allowWhileIdle: true,
+    });
+  };
+  const deleteNotofications = id => {
+    PushNotification.cancelLocalNotifications({
+      id: Math.trunc(new Date(id).getTime() / 1000),
+    });
+  };
   const [nameTask, setNameTask] = React.useState('');
   const [discriptionTask, setDiscriptionTask] = React.useState('');
   const [deadline, setDeadline] = useState(new Date());
@@ -43,6 +58,7 @@ const Form: () => Node = ({addTask, setModalWindow, el}) => {
         delete newTask.deadline;
       }
       if (el !== undefined) {
+        deleteNotofications(newTask.key);
         if (el?.isReady) {
           newTask.isReady = el.isReady;
         }
@@ -50,6 +66,14 @@ const Form: () => Node = ({addTask, setModalWindow, el}) => {
           newTask.finishDate = el.finishDate;
         }
         newTask.key = el.key;
+      }
+      if (newTask?.deadline !== undefined) {
+        handleNotofications(
+          newTask.nameTask,
+          newTask.descriptionTask,
+          newTask.key,
+          newTask.deadline,
+        );
       }
       addTask(newTask);
       setModalWindow(false);

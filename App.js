@@ -22,9 +22,19 @@ import AddTaskButton from './components/AddTaskButton';
 import * as eva from '@eva-design/eva';
 import {ApplicationProvider} from '@ui-kitten/components';
 import RNPickerSelect from 'react-native-picker-select';
+import PushNotification from 'react-native-push-notification';
 
 export const App = () => {
   console.disableYellowBox = true;
+  const createChannels = () => {
+    PushNotification.createChannel({
+      channelId: 'myChannel',
+      channelName: 'myChannel',
+    });
+  };
+  useEffect(() => {
+    createChannels();
+  }, []);
   const [listOfTasks, setListOfTasks] = useState([]);
   const [listOfFilterTasks, setListOfFilterTasks] = useState([]);
   const [checked, setChecked] = React.useState(true);
@@ -49,6 +59,11 @@ export const App = () => {
       // Error retrieving data
     }
   };
+  const deleteNotofications = id => {
+    PushNotification.cancelLocalNotifications({
+      id: Math.trunc(new Date(id).getTime() / 1000),
+    });
+  };
   const deleteTask = async key => {
     let newTasks = listOfTasks.filter(listOfTasks => listOfTasks.key !== key);
     setListOfTasks(list => {
@@ -56,6 +71,7 @@ export const App = () => {
     });
     await storeData(newTasks);
     await changeListOfTasks(currentFilter, newTasks);
+    deleteNotofications(key);
   };
   const addTask = async el => {
     setListOfTasks(list => {
