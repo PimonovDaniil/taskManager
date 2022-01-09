@@ -40,7 +40,6 @@ const Task: () => Node = ({el, deleteTask, changeReady, getModalForm}) => {
       },
     }),
   ).current;
-  //TODO отрефакторить кнопки
   return (
     <Animated.View
       style={{

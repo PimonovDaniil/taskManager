@@ -41,7 +41,6 @@ const Form: () => Node = ({addTask, setModalWindow, el}) => {
   }
 
   const onAddTaskPress = () => {
-    //TODO отрефакторить
     if (nameTask.trim() === '') {
       Alert.alert('Предупреждение', 'Введите название задачи');
     } else {
@@ -79,9 +78,8 @@ const Form: () => Node = ({addTask, setModalWindow, el}) => {
   };
   const [show, showModal] = useState(false);
   const toggle = () => showModal(!show);
-  //TODO тут надо рефакторить конечно
   return (
-    <SafeAreaView style={[{padding: 30}, {backgroundColor: '#e5f4ff'}]}>
+    <SafeAreaView style={styles.areaStyle}>
       <View>
         <TextInput
           style={styles.input}
@@ -96,7 +94,7 @@ const Form: () => Node = ({addTask, setModalWindow, el}) => {
           placeholder="Введите описание задачи"
           onChangeText={discriptionTask => setDiscriptionTask(discriptionTask)}
         />
-        <View style={[{alignItems: 'flex-start'}]}>
+        <View style={{alignItems: 'flex-start'}}>
           <Toggle checked={checked} onChange={onCheckedChange}>
             Установить крайний срок задачи
           </Toggle>
@@ -109,13 +107,9 @@ const Form: () => Node = ({addTask, setModalWindow, el}) => {
             show={show}
             toggle={toggle}>
             <View
-              style={[
-                {flexDirection: 'row'},
-                {alignItems: 'flex-end'},
-                {fontSize: 14},
-              ]}>
+              style={styles.dateStyle}>
               <Text>Крайний срок: </Text>
-              <Text style={({fontWeight: 'bold'}, {fontSize: 18})}>
+              <Text style={styles.textStyle}>
                 {deadline ? moment(deadline).format('MMMM DD, YYYY') : '-'}
               </Text>
             </View>
@@ -135,12 +129,10 @@ const Form: () => Node = ({addTask, setModalWindow, el}) => {
           ]}
         />
       </View>
-      <View>
-        <Button
-          title={el === undefined ? 'Добавить' : 'Сохранить'}
-          onPress={() => onAddTaskPress()}
-        />
-      </View>
+      <Button
+        title={el === undefined ? 'Добавить' : 'Сохранить'}
+        onPress={() => onAddTaskPress()}
+      />
     </SafeAreaView>
   );
 };
@@ -151,6 +143,19 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'silver',
     borderRadius: 5,
+  },
+  textStyle: {
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+  dateStyle: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    fontSize: 14,
+  },
+  areaStyle: {
+    padding: 30,
+    backgroundColor: '#e5f4ff',
   },
 });
 

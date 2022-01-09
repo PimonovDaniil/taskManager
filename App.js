@@ -12,9 +12,9 @@ import {
   AsyncStorage,
   FlatList,
   Image,
-  SafeAreaView,
+  SafeAreaView, StyleSheet,
   View,
-} from 'react-native';
+} from "react-native";
 // import {AsyncStorage} from '@react-native-async-storage/async-storage';
 import Task from './components/Task/Task';
 import AddTaskButton from './components/AddTaskButton/AddTaskButton';
@@ -194,15 +194,11 @@ export const App = () => {
 
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
-      <SafeAreaView style={[{flex: 1}, {backgroundColor: '#e5f4ff'}]}>
-        <View style={[{marginLeft: 30}, {marginRight: 30}]}>
+      <SafeAreaView style={styles.areaStyle}>
+        <View style={styles.pickerSelectStyle}>
           <RNPickerSelect
             placeholder={{}}
-            style={{
-              placeholder: {color: 'black'},
-              inputIOS: {color: 'black'},
-              inputAndroid: {color: 'black'},
-            }}
+            style={styles.pickColorStyle}
             onValueChange={value => changeListOfTasks(value, listOfTasks)}
             items={[
               {label: 'все', value: 'все'},
@@ -214,7 +210,7 @@ export const App = () => {
         </View>
         {checked === false && (
           <FlatList
-            style={[{flex: 1}]}
+            style={{flex: 1}}
             data={listOfFilterTasks}
             renderItem={({item}) => (
               <Task
@@ -227,13 +223,9 @@ export const App = () => {
           />
         )}
         {checked === true && (
-          <View style={[{flex: 1}, {alignItems: 'center'}]}>
+          <View style={styles.imageCenter}>
             <Image
-              style={[
-                {position: 'relative'},
-                {top: '50%'},
-                {transform: [{translateY: -64}]},
-              ]}
+              style={styles.imageStyle}
               source={require('./icons/load-a_icon-icons.com_50113.png')}
             />
           </View>
@@ -249,5 +241,30 @@ export const App = () => {
     </ApplicationProvider>
   );
 };
+
+const styles = StyleSheet.create({
+  areaStyle: {
+    flex: 1,
+    backgroundColor: '#e5f4ff',
+  },
+  pickerSelectStyle: {
+    marginLeft: 30,
+    marginRight: 30,
+  },
+  pickColorStyle: {
+    placeholder: {color: 'black'},
+    inputIOS: {color: 'black'},
+    inputAndroid: {color: 'black'},
+  },
+  imageStyle: {
+    position: 'relative',
+    top: '50%',
+    transform: [{translateY: -64}],
+  },
+  imageCenter: {
+    flex: 1,
+    alignItems: 'center',
+  },
+});
 
 export default App;
