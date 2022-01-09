@@ -1,30 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import type {Node} from 'react';
-import {
-  FlatList,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TouchableWithoutFeedback,
-  useColorScheme,
-  View,
-} from 'react-native';
-
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-import TaskCompletingComponent from '../TaskCompletingComponent';
-import HeaderTaskInformationComponent from './HeaderTaskInformationComponent';
-import DescriptionTaskInformationComponent from './DescriptionTaskInformationComponent';
+import {Text, View} from 'react-native';
 import moment from 'moment';
 
 const DateTaskInformationComponent: () => Node = ({el}) => {
+  moment.locale('ru');
   return (
     <View>
       {el?.deadline !== undefined && (
@@ -40,16 +20,12 @@ const DateTaskInformationComponent: () => Node = ({el}) => {
             },
             {textAlign: 'right'},
           ]}>
-          Сделать до{' '}
-          {el?.deadline ? moment(el?.deadline).format('MMMM DD, YYYY') : '-'}
+          Сделать до {el?.deadline ? moment(el?.deadline).format('L') : '-'}
         </Text>
       )}
       {el?.finishDate !== undefined && (
         <Text style={[{color: '#A3F06C'}, {textAlign: 'right'}]}>
-          Сделано{' '}
-          {el?.finishDate
-            ? moment(el?.finishDate).format('MMMM DD, YYYY')
-            : '-'}
+          Сделано {el?.finishDate ? moment(el?.finishDate).format('L') : '-'}
         </Text>
       )}
     </View>
