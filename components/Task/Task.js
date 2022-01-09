@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import type {Node} from 'react';
 import {
   Alert,
@@ -6,95 +6,55 @@ import {
   SafeAreaView,
   StyleSheet,
   TouchableHighlight,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
-  Animated,
-  PanResponder,
-  Dimensions,
 } from 'react-native';
 
 import TaskCompletingComponent from './TaskComponents/TaskCompletingComponent';
 import TaskInformationComponent from './TaskComponents/TaskInformationComponent';
 import AddModalForm from '../AddModalForm';
 
-const Task: () => Node = ({el, deleteTask, changeReady, redactTask}) => {
-  const pan = useRef(new Animated.ValueXY()).current;
-  const [isActive, setIsActive] = useState(false);
-  const panResponder = useRef(
-    PanResponder.create({
-      onMoveShouldSetPanResponder: () => true,
-      onPanResponderGrant: () => {
-        pan.setOffset({
-          x: pan.x._value,
-          y: pan.y._value,
-        });
-      },
-      onPanResponderEnd: () => {
-        if (
-          pan.x._value < -Dimensions.get('window').width / 4 ||
-          pan.x._value > Dimensions.get('window').width / 4
-        ) {
-          buttonDelitePress();
-        }
-        Animated.spring(
-          pan, // Auto-multiplexed
-          {toValue: {x: 0, y: 0}}, // Back to zero
-        ).start();
-      },
-      onPanResponderMove: Animated.event([null, {dx: pan.x, dy: pan.y}]),
-      onPanResponderRelease: () => {
-        Animated.spring(
-          pan, // Auto-multiplexed
-          {toValue: {x: 0, y: 0}}, // Back to zero
-        ).start();
-      },
-    }),
-  ).current;
-
+const Task: () => Node = ({el, deleteTask, changeReady, getModalForm}) => {
   const buttonDelitePress = () =>
     Alert.alert('Предупреждение', 'Вы уверены что хотите удалить задачу?', [
       {text: 'Удалить', onPress: () => deleteTask(el.key)},
       {text: 'Отмена'},
     ]);
   //TODO отрефакторить кнопки
-  const [modalWindow, setModalWindow] = useState(false);
   return (
-    <Animated.View
-      style={{
-        transform: [{translateX: pan.x}],
-      }}
-      {...panResponder.panHandlers}>
-      <SafeAreaView>
-        <TouchableHighlight
-          style={[{zIndex: 1}]}
-          onPress={() => setModalWindow(true)}>
-          <View style={[styles.roundStyle, {top: 40}]}>
-            <Image source={require('../../icons/edit_16px.png')} />
-          </View>
-        </TouchableHighlight>
-        <View
-          style={[
-            styles.taskStyle,
-            {
-              borderColor:
-                el.isReady === true
-                  ? '#A3F06C'
-                  : new Date(el.deadline) < new Date() &&
-                    new Date(el.deadline).getDay() - new Date().getDay() !== 0
-                  ? 'red'
-                  : 'black',
-            },
-          ]}>
-          <TaskCompletingComponent el={el} changeReady={changeReady} />
-          <TaskInformationComponent el={el} />
+    <SafeAreaView>
+      <TouchableHighlight
+        style={[{zIndex: 1}]}
+        onPress={() => buttonDelitePress()}>
+        <View style={[styles.roundStyle, {top: 40}]}>
+          <Image source={require('../../icons/Close_16px.png')} />
         </View>
-        <AddModalForm
-          addTask={redactTask}
-          setModalWindow={setModalWindow}
-          modalWindow={modalWindow}
-          el={el}
-        />
-      </SafeAreaView>
-    </Animated.View>
+      </TouchableHighlight>
+      <TouchableHighlight
+        style={[{zIndex: 1}]}
+        onPress={() => getModalForm(el)}>
+        <View style={[styles.roundStyle, {top: 75}]}>
+          <Image source={require('../../icons/edit_16px.png')} />
+        </View>
+      </TouchableHighlight>
+      <View
+        style={[
+          styles.taskStyle,
+          {
+            borderColor:
+              el.isReady === true
+                ? '#A3F06C'
+                : new Date(el.deadline) < new Date() &&
+                  new Date(el.deadline).getDay() - new Date().getDay() !== 0
+                ? 'red'
+                : 'black',
+          },
+        ]}>
+        <TaskCompletingComponent el={el} changeReady={changeReady} />
+        <TaskInformationComponent el={el} />
+      </View>
+    </SafeAreaView>
   );
 };
 

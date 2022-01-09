@@ -22,6 +22,7 @@ import * as eva from '@eva-design/eva';
 import {ApplicationProvider} from '@ui-kitten/components';
 import RNPickerSelect from 'react-native-picker-select';
 import PushNotification from 'react-native-push-notification';
+import AddModalForm from './components/AddModalForm';
 
 export const App = () => {
   console.disableYellowBox = true;
@@ -35,9 +36,15 @@ export const App = () => {
     createChannels();
   }, []);
   const [listOfTasks, setListOfTasks] = useState([]);
+  const [modalWindow, setModalWindow] = useState(false);
+  const [elem, setElem] = useState(false);
   const [listOfFilterTasks, setListOfFilterTasks] = useState([]);
   const [checked, setChecked] = React.useState(true);
   const [currentFilter, setCurrentFilter] = React.useState('все');
+  const getModalForm = el => {
+    setModalWindow(true);
+    setElem(el);
+  };
   const storeData = async list => {
     try {
       await AsyncStorage.setItem('@MySuperStore:key', JSON.stringify(list));
@@ -214,7 +221,7 @@ export const App = () => {
                 el={item}
                 deleteTask={deleteTask}
                 changeReady={changeReady}
-                redactTask={redactTask}
+                getModalForm={getModalForm}
               />
             )}
           />
@@ -232,6 +239,12 @@ export const App = () => {
           </View>
         )}
         <AddTaskButton addTask={addTask} />
+        <AddModalForm
+          addTask={redactTask}
+          setModalWindow={setModalWindow}
+          modalWindow={modalWindow}
+          el={elem}
+        />
       </SafeAreaView>
     </ApplicationProvider>
   );

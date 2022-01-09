@@ -68,7 +68,11 @@ const Form: () => Node = ({addTask, setModalWindow, el}) => {
         newTask.key = el.key;
       }
       if (newTask?.deadline !== undefined) {
-        handleNotofications(newTask.nameTask, newTask.key, newTask.deadline);
+        handleNotofications(
+          newTask.nameTask,
+          newTask.key,
+          newTask.deadline,
+        );
       }
       addTask(newTask);
       setModalWindow(false);
