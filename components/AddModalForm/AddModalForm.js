@@ -7,7 +7,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import Form from './Form';
+import Form from './Form/Form';
 import {ModalPanel} from '@ui-kitten/components';
 import SafeAreaView from 'react-native/Libraries/Components/SafeAreaView/SafeAreaView';
 
@@ -30,7 +30,7 @@ const AddModalForm: () => Node = ({
             onPress={() => {
               setModalWindow(false);
             }}>
-            <Image source={require('../icons/icons8-удалить-48.png')} />
+            <Image source={require('../../icons/icons8-удалить-48.png')} />
           </TouchableWithoutFeedback>
         </View>
         <Form addTask={addTask} setModalWindow={setModalWindow} el={el} />

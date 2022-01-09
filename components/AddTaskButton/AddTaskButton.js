@@ -9,7 +9,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import AddModalForm from './AddModalForm';
+import AddModalForm from '../AddModalForm/AddModalForm';
 
 const AddTaskButton: () => Node = ({addTask}) => {
   const [modalWindow, setModalWindow] = useState(false);
@@ -19,7 +19,7 @@ const AddTaskButton: () => Node = ({addTask}) => {
       <TouchableWithoutFeedback onPress={() => setModalWindow(true)}>
         <View
           style={[{flex: 1}, {flexDirection: 'row'}, {alignItems: 'center'}]}>
-          <Image source={require('../icons/add_100px.png')} />
+          <Image source={require('../../icons/add_100px.png')} />
           <Text style={[{flex: 3}, {fontSize: 22}, {color: 'black'}]}>
             Добавить задачу
           </Text>

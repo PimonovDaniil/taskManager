@@ -17,12 +17,12 @@ import {
 } from 'react-native';
 // import {AsyncStorage} from '@react-native-async-storage/async-storage';
 import Task from './components/Task/Task';
-import AddTaskButton from './components/AddTaskButton';
+import AddTaskButton from './components/AddTaskButton/AddTaskButton';
 import * as eva from '@eva-design/eva';
 import {ApplicationProvider} from '@ui-kitten/components';
 import RNPickerSelect from 'react-native-picker-select';
 import PushNotification from 'react-native-push-notification';
-import AddModalForm from './components/AddModalForm';
+import AddModalForm from './components/AddModalForm/AddModalForm';
 
 export const App = () => {
   console.disableYellowBox = true;

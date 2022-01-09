@@ -1,11 +1,9 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef} from 'react';
 import type {Node} from 'react';
 import {
   Alert,
-  Image,
   SafeAreaView,
   StyleSheet,
-  TouchableHighlight,
   Animated,
   PanResponder,
   Dimensions,
@@ -14,7 +12,7 @@ import {
 
 import TaskCompletingComponent from './TaskComponents/TaskCompletingComponent';
 import TaskInformationComponent from './TaskComponents/TaskInformationComponent';
-import AddModalForm from '../AddModalForm';
+import RedactButton from './TaskComponents/RedactButton';
 
 const Task: () => Node = ({el, deleteTask, changeReady, getModalForm}) => {
   const buttonDelitePress = () => {
@@ -33,18 +31,6 @@ const Task: () => Node = ({el, deleteTask, changeReady, getModalForm}) => {
           y: pan.y._value,
         });
       },
-      // onPanResponderEnd: () => {
-      //   if (
-      //     pan.x._value < -Dimensions.get('window').width / 4 ||
-      //     pan.x._value > Dimensions.get('window').width / 4
-      //   ) {
-      //     buttonDelitePress();
-      //   }
-      //   Animated.spring(
-      //     pan, // Auto-multiplexed
-      //     {toValue: {x: 0, y: 0}}, // Back to zero
-      //   ).start();
-      // },
       onPanResponderMove: Animated.event([null, {dx: pan.x, dy: pan.y}]),
       onPanResponderRelease: () => {
         Animated.spring(
@@ -70,13 +56,7 @@ const Task: () => Node = ({el, deleteTask, changeReady, getModalForm}) => {
         }
       }}>
       <SafeAreaView>
-        <TouchableHighlight
-          style={[{zIndex: 1}]}
-          onPress={() => getModalForm(el)}>
-          <View style={[styles.roundStyle, {top: 49}]}>
-            <Image source={require('../../icons/edit_16px.png')} />
-          </View>
-        </TouchableHighlight>
+        <RedactButton el={el} getModalForm={getModalForm} />
         <View
           style={[
             styles.taskStyle,
@@ -109,22 +89,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginLeft: 30,
     marginRight: 30,
-  },
-  roundStyle: {
-    padding: 0,
-    position: 'relative',
-    marginTop: -30,
-    borderRadius: 50,
-    width: 30,
-    height: 30,
-    backgroundColor: '#65A5D1',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 'auto',
-    marginRight: 20,
-    zIndex: 2,
-    borderWidth: 2,
-    border: '1px',
   },
 });
 
