@@ -82,11 +82,9 @@ export const App = () => {
   };
   const deleteTask = async key => {
     let newTasks = listOfTasks.filter(listOfTasks => listOfTasks.key !== key);
-    setListOfTasks(list => {
-      return list.filter(listOfTasks => listOfTasks.key !== key);
-    });
+    setListOfTasks(newTasks);
     await storeData(newTasks);
-    await changeListOfTasks(currentFilter, newTasks);
+    changeListOfTasks(currentFilter, newTasks);
     deleteNotofications(key);
   };
   const addTask = async el => {
@@ -110,6 +108,7 @@ export const App = () => {
         break;
       }
     }
+    await storeData(listOfTasks);
     changeListOfTasks(currentFilter, listOfTasks);
   };
   const changeReady = key => {
@@ -139,6 +138,7 @@ export const App = () => {
               clonedCard.deadline,
             );
       }
+      storeData(clonedState);
       changeListOfTasks(currentFilter, clonedState);
     };
     if (clonedCard.isReady === true) {
