@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
 import type {Node} from 'react';
 import {
+  Button,
   Image,
+  Modal,
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
@@ -11,10 +13,12 @@ import AddModalForm from '../AddModalForm/AddModalForm';
 
 const AddTaskButton: () => Node = ({addTask}) => {
   const [modalWindow, setModalWindow] = useState(false);
+  //TODO отрефакторить
   return (
     <View style={styles.addTaskStyle}>
       <TouchableWithoutFeedback onPress={() => setModalWindow(true)}>
-        <View style={styles.buttonStyle}>
+        <View
+          style={styles.imageWrapper}>
           <Image source={require('../../icons/add_100px.png')} />
           <Text style={styles.textStyle}>Добавить задачу</Text>
         </View>
@@ -39,7 +43,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: 'black',
   },
-  buttonStyle: {
+  imageWrapper: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',

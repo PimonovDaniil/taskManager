@@ -41,6 +41,7 @@ const Form: () => Node = ({addTask, setModalWindow, el}) => {
   }
 
   const onAddTaskPress = () => {
+    //TODO отрефакторить
     if (nameTask.trim() === '') {
       Alert.alert('Предупреждение', 'Введите название задачи');
     } else {
@@ -78,8 +79,9 @@ const Form: () => Node = ({addTask, setModalWindow, el}) => {
   };
   const [show, showModal] = useState(false);
   const toggle = () => showModal(!show);
+  //TODO тут надо рефакторить конечно
   return (
-    <SafeAreaView style={styles.areaStyle}>
+    <SafeAreaView style={styles.areaView}>
       <View>
         <TextInput
           style={styles.input}
@@ -101,13 +103,12 @@ const Form: () => Node = ({addTask, setModalWindow, el}) => {
         </View>
         {checked === true && (
           <DateTimePickerModal
-            style={[{disabled: false}]}
+            style={{disabled: false}}
             value={deadline}
             onChange={(event, date) => setDeadline(date)}
             show={show}
             toggle={toggle}>
-            <View
-              style={styles.dateStyle}>
+            <View style={styles.timePickStyle}>
               <Text>Крайний срок: </Text>
               <Text style={styles.textStyle}>
                 {deadline ? moment(deadline).format('MMMM DD, YYYY') : '-'}
@@ -116,7 +117,7 @@ const Form: () => Node = ({addTask, setModalWindow, el}) => {
           </DateTimePickerModal>
         )}
       </View>
-      <View style={[{marginTop: 20}]}>
+      <View style={{marginTop: 20}}>
         <Text>Приоритет задачи:</Text>
         <RNPickerSelect
           value={priority}
@@ -129,10 +130,12 @@ const Form: () => Node = ({addTask, setModalWindow, el}) => {
           ]}
         />
       </View>
-      <Button
-        title={el === undefined ? 'Добавить' : 'Сохранить'}
-        onPress={() => onAddTaskPress()}
-      />
+      <View>
+        <Button
+          title={el === undefined ? 'Добавить' : 'Сохранить'}
+          onPress={() => onAddTaskPress()}
+        />
+      </View>
     </SafeAreaView>
   );
 };
@@ -148,12 +151,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 18,
   },
-  dateStyle: {
+  timePickStyle: {
     flexDirection: 'row',
     alignItems: 'flex-end',
     fontSize: 14,
   },
-  areaStyle: {
+  areaView: {
     padding: 30,
     backgroundColor: '#e5f4ff',
   },

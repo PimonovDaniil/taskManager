@@ -1,9 +1,11 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import type {Node} from 'react';
 import {
   Alert,
+  Image,
   SafeAreaView,
   StyleSheet,
+  TouchableHighlight,
   Animated,
   PanResponder,
   Dimensions,
@@ -12,7 +14,7 @@ import {
 
 import TaskCompletingComponent from './TaskComponents/TaskCompletingComponent';
 import TaskInformationComponent from './TaskComponents/TaskInformationComponent';
-import RedactButton from './TaskComponents/RedactButton';
+import AddModalForm from '../AddModalForm/AddModalForm';
 
 const Task: () => Node = ({el, deleteTask, changeReady, getModalForm}) => {
   const buttonDelitePress = () => {
@@ -40,6 +42,7 @@ const Task: () => Node = ({el, deleteTask, changeReady, getModalForm}) => {
       },
     }),
   ).current;
+  //TODO отрефакторить кнопки
   return (
     <Animated.View
       style={{
@@ -55,7 +58,13 @@ const Task: () => Node = ({el, deleteTask, changeReady, getModalForm}) => {
         }
       }}>
       <SafeAreaView>
-        <RedactButton el={el} getModalForm={getModalForm} />
+        <TouchableHighlight
+          style={[{zIndex: 1}]}
+          onPress={() => getModalForm(el)}>
+          <View style={[styles.roundStyle, {top: 40}]}>
+            <Image source={require('../../icons/edit_16px.png')} />
+          </View>
+        </TouchableHighlight>
         <View
           style={[
             styles.taskStyle,
@@ -88,6 +97,22 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginLeft: 30,
     marginRight: 30,
+  },
+  roundStyle: {
+    padding: 0,
+    position: 'relative',
+    marginTop: -30,
+    borderRadius: 50,
+    width: 30,
+    height: 30,
+    backgroundColor: '#65A5D1',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 'auto',
+    marginRight: 20,
+    zIndex: 2,
+    borderWidth: 2,
+    border: '1px',
   },
 });
 

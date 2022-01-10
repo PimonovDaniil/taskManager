@@ -12,16 +12,17 @@ import {
   AsyncStorage,
   FlatList,
   Image,
-  SafeAreaView, StyleSheet,
+  SafeAreaView,
+  StyleSheet,
   View,
-} from "react-native";
+} from 'react-native';
 // import {AsyncStorage} from '@react-native-async-storage/async-storage';
 import Task from './components/Task/Task';
-import AddTaskButton from './components/AddTaskButton/AddTaskButton';
 import * as eva from '@eva-design/eva';
 import {ApplicationProvider} from '@ui-kitten/components';
 import RNPickerSelect from 'react-native-picker-select';
 import PushNotification from 'react-native-push-notification';
+import AddTaskButton from './components/AddTaskButton/AddTaskButton';
 import AddModalForm from './components/AddModalForm/AddModalForm';
 
 export const App = () => {
@@ -194,11 +195,11 @@ export const App = () => {
 
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
-      <SafeAreaView style={styles.areaStyle}>
-        <View style={styles.pickerSelectStyle}>
+      <SafeAreaView style={styles.areaViewStyle}>
+        <View style={styles.pickerWrapperStyle}>
           <RNPickerSelect
             placeholder={{}}
-            style={styles.pickColorStyle}
+            style={styles.pickerStyle}
             onValueChange={value => changeListOfTasks(value, listOfTasks)}
             items={[
               {label: 'все', value: 'все'},
@@ -210,7 +211,7 @@ export const App = () => {
         </View>
         {checked === false && (
           <FlatList
-            style={{flex: 1}}
+            style={[{flex: 1}]}
             data={listOfFilterTasks}
             renderItem={({item}) => (
               <Task
@@ -223,7 +224,7 @@ export const App = () => {
           />
         )}
         {checked === true && (
-          <View style={styles.imageCenter}>
+          <View style={styles.imageWrapperStyle}>
             <Image
               style={styles.imageStyle}
               source={require('./icons/load-a_icon-icons.com_50113.png')}
@@ -243,27 +244,27 @@ export const App = () => {
 };
 
 const styles = StyleSheet.create({
-  areaStyle: {
-    flex: 1,
-    backgroundColor: '#e5f4ff',
-  },
-  pickerSelectStyle: {
-    marginLeft: 30,
-    marginRight: 30,
-  },
-  pickColorStyle: {
-    placeholder: {color: 'black'},
-    inputIOS: {color: 'black'},
-    inputAndroid: {color: 'black'},
-  },
   imageStyle: {
     position: 'relative',
     top: '50%',
     transform: [{translateY: -64}],
   },
-  imageCenter: {
+  imageWrapperStyle: {
     flex: 1,
     alignItems: 'center',
+  },
+  pickerStyle: {
+    placeholder: {color: 'black'},
+    inputIOS: {color: 'black'},
+    inputAndroid: {color: 'black'},
+  },
+  pickerWrapperStyle: {
+    marginLeft: 30,
+    marginRight: 30,
+  },
+  areaViewStyle: {
+    flex: 1,
+    backgroundColor: '#e5f4ff',
   },
 });
 

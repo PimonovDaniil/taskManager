@@ -4,7 +4,6 @@ import {Text, View} from 'react-native';
 import moment from 'moment';
 
 const DateTaskInformationComponent: () => Node = ({el}) => {
-  moment.locale('ru');
   return (
     <View>
       {el?.deadline !== undefined && (

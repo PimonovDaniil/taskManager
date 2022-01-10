@@ -7,8 +7,9 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import Form from './Form/Form';
 import {ModalPanel} from '@ui-kitten/components';
+import SafeAreaView from 'react-native/Libraries/Components/SafeAreaView/SafeAreaView';
+import Form from './Form/Form';
 
 const AddModalForm: () => Node = ({
   addTask,
@@ -17,9 +18,10 @@ const AddModalForm: () => Node = ({
   el,
 }) => {
   return (
-    <Modal style={[{backgroundColor: '#e5f4ff'}]} visible={modalWindow}>
-      <ModalPanel style={[{backgroundColor: '#e5f4ff'}]}>
-        <View style={styles.deleteStyle}>
+    <Modal style={{backgroundColor: '#e5f4ff'}} visible={modalWindow}>
+      <ModalPanel style={{backgroundColor: '#e5f4ff'}}>
+        <View
+          style={styles.buttonStyle}>
           <TouchableWithoutFeedback
             onPress={() => {
               setModalWindow(false);
@@ -35,18 +37,13 @@ const AddModalForm: () => Node = ({
 };
 
 const styles = StyleSheet.create({
-  addTaskStyle: {
-    flexDirection: 'row',
-    marginLeft: 30,
-    marginRight: 30,
-  },
-  deleteStyle: {
-    alignContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#e5f4ff',
-  },
   crutchStyle: {
     flex: 1,
+    backgroundColor: '#e5f4ff',
+  },
+  buttonStyle: {
+    alignContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#e5f4ff',
   }
 });
